@@ -2,6 +2,7 @@ package Grupo11_ISCTE.Code_Smells_Detective;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -13,18 +14,45 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class FileParser {
 
-	public static final String XLSX_FILE_PATH = "/Users/marcelopereira/Desktop/Defeitos.xlsx";
+	private Workbook workbook;
+	private Sheet sheet;
+	private DataFormatter dataFormatter;
+	
+	
+	public FileParser(String filePath) {
+		try {
+			workbook = WorkbookFactory.create(new File(filePath));
+			sheet = workbook.getSheetAt(0);
+			dataFormatter = new DataFormatter();
+		} catch (EncryptedDocumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+		
+	public ArrayList<MethodEntity> scanFileForMethods() {
+
+		ArrayList<MethodEntity> allMethods = new ArrayList<MethodEntity>();
+		
+		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+			ArrayList<String> rowData= new ArrayList<String>();
+			for (Cell cell : sheet.getRow(i)) {
+				String cellValue = dataFormatter.formatCellValue(cell);
+				rowData.add(cellValue);
+			}
+
+			MethodEntity methodEntity = new MethodEntity(rowData);
+			allMethods.add(methodEntity);
+		}
+		
+		return allMethods;
+	}
 	
 	
 	public void printFile(){
 		
-		Workbook workbook;
-		try {
-			workbook = WorkbookFactory.create(new File(XLSX_FILE_PATH));
-			Sheet sheet = workbook.getSheetAt(0);
-
-			DataFormatter dataFormatter = new DataFormatter();
-
 			for (Row row : sheet) {
 				for (Cell cell : row) {
 					String cellValue = dataFormatter.formatCellValue(cell);
@@ -33,14 +61,6 @@ public class FileParser {
 
 				System.out.println();
 			}
-		} catch (EncryptedDocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 	
 	
