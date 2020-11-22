@@ -50,6 +50,39 @@ public class FileParser {
 		return allMethods;
 	}
 	
+	public String[][] dataArray() {
+		
+		String allRows[][] = new String[sheet.getLastRowNum()][sheet.getRow(1).getLastCellNum()];
+		
+		for (int i = 1; i < sheet.getLastRowNum()+1; i++) {
+			String rowData[]= new String[sheet.getRow(i).getLastCellNum()];
+			for (int j = 0; j < sheet.getRow(i).getLastCellNum();  j++) {
+				Cell cell = sheet.getRow(i).getCell(j);
+				String cellValue = dataFormatter.formatCellValue(cell);
+				rowData[j]=cellValue;
+			}
+
+			allRows[i-1]= rowData;
+		}
+		
+		return allRows;
+	
+	}
+	
+	
+	public String[] columnNamesArray() {
+		
+		String[] columnNames = new String[sheet.getRow(0).getLastCellNum()];
+		
+		for (int j = 0; j < sheet.getRow(0).getLastCellNum();  j++) {
+			Cell cell = sheet.getRow(0).getCell(j);
+			String cellValue = dataFormatter.formatCellValue(cell);
+			columnNames[j] = cellValue;
+		}
+		return columnNames;
+		
+	}
+	
 	
 	public void printFile(){
 		

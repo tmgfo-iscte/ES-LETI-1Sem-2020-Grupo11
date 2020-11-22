@@ -15,12 +15,36 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileSystemView;
 
 
 public class GUI {
 	
-	 public static void main(String args[]) {
+	public String filePathToImport;
+	
+	public GUI() {
+		filePathToImport="";
+	}
+	
+	 
+	public void init() {
+		Runnable runGUI = new Runnable() {
+			
+			@Override
+			public void run() {
+				buildGUI();
+				
+			}
+		};
+		
+		SwingUtilities.invokeLater(runGUI);
+		
+	}
+	
+	
+	
+	public void buildGUI() {
 
 		 
 		 	String[] quality_evaluation= {"Textual","Tabular", "Gráfica"};
@@ -44,15 +68,15 @@ public class GUI {
 
 	        //Creating the panel at bottom and adding components
 	        JPanel panel = new JPanel(); // the panel is not visible in output
-	        JButton excel = new JButton("Import Excel");
+	        JButton importExcel = new JButton("Import Excel");
 	        JComboBox quality = new JComboBox(quality_evaluation);
 	        JButton send = new JButton("Check");
-	        JButton reset = new JButton("Random");
+	        JButton showExcel = new JButton("Show Excel");
 	        quality.setSelectedIndex(2);
-	        panel.add(excel); // Components Added using Flow Layout
+	        panel.add(importExcel); // Components Added using Flow Layout
 	        panel.add(quality);
 	        panel.add(send);
-	        panel.add(reset);
+	        panel.add(showExcel);
 
 
 	        // Icon at the Center
@@ -60,18 +84,30 @@ public class GUI {
 	        ImageIcon icon = new ImageIcon(path);
 	        mid.setIcon(icon);
 
-	        excel.addActionListener(new ActionListener() {
+	        importExcel.addActionListener(new ActionListener() {
 				
+				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-					jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 					int returnValue = jfc.showOpenDialog(null);
 					if(returnValue == JFileChooser.APPROVE_OPTION) {
 						File selectedFile = jfc.getSelectedFile();
 						System.out.println(selectedFile.getAbsolutePath());
-						String filePath = selectedFile.getAbsolutePath();
+						filePathToImport = selectedFile.getAbsolutePath();
 					}
+				}
+			});
+	        
+	        showExcel.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					ExcelTable table = new ExcelTable(filePathToImport);
+					table.init();
+					
 				}
 			});
 	        
