@@ -32,16 +32,24 @@ public class ExcelTable {
 	
 	private void buildGUI() {
 		
-		
-		
 		JFrame frame = new JFrame("Excel File");
 		
+		JTable table = buildTable(); 
+	  
+	        // adding table to JScrollPane 
+	        JScrollPane scrollPane = new JScrollPane(table); 
+	        frame.add(scrollPane); 
+	        // Frame Size 
+	        frame.setSize(1000, 1000); 
+	        // Frame Visible = true 
+	        frame.setVisible(true); 
+		
+	}
+
+	private JTable buildTable() {
 		JTable table;
 		
 		FileParser fileParser = new FileParser(fileToImport);
-		
-		
-		
 		
 		String[][] data = fileParser.dataArray();
 	  
@@ -50,19 +58,8 @@ public class ExcelTable {
 	  
 	        // Initializing the JTable 
 	        table = new JTable(data, columnNames); 
-	        table.setBounds(30, 40, 200, 300); 
-	  
-	        // adding it to JScrollPane 
-	        JScrollPane sp = new JScrollPane(table); 
-	        frame.add(sp); 
-	        // Frame Size 
-	        frame.setSize(1000, 1000); 
-	        // Frame Visible = true 
-	        frame.setVisible(true); 
-		
-		
-		
-		
+	        table.setBounds(30, 40, 200, 300);
+		return table;
 	}
 	
 	
