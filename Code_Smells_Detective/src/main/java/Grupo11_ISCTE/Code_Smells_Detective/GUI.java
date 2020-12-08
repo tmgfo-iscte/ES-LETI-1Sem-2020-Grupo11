@@ -9,12 +9,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -25,11 +23,10 @@ import javax.swing.filechooser.FileSystemView;
 
 public class GUI {
 
-	private static String[] quality_evaluation = { "Textual", "Tabular", "Gráfica" };
 	private static String[] rules = { "LOC", "CYCLO", "ATFD", "LAA" };
 	private static String[] signals = {">=", "<="};
 	private static  String[] and_or = { "OR", "AND" };
-	private ArrayList<Component> lista = new ArrayList<>();
+	private ArrayList<Component> list = new ArrayList<>();
 	private static JComboBox rule = new JComboBox(rules);
 	private static JComboBox signal = new JComboBox(signals);
 	private static JComboBox or_and = new JComboBox(and_or);
@@ -77,20 +74,20 @@ public class GUI {
 		// Creating the panel at bottom and adding components
 		JPanel panel = new JPanel(); // the panel is not visible in output
 		JButton importExcel = new JButton("Import Excel");
-		JComboBox quality = new JComboBox(quality_evaluation);
-		JButton send = new JButton("Check");
+		JButton showCodeSmells = new JButton("Show Code Smells");
 		JButton showExcel = new JButton("Show Excel");
-		quality.setSelectedIndex(2);
-		panel.add(importExcel); // Components Added using Flow Layout
-		panel.add(quality);
-		panel.add(send);
+		JButton showQI = new JButton ("Show Quality Indicators");
+		// Components Added using Flow Layout
+		panel.add(importExcel); 
+		panel.add(showCodeSmells);
 		panel.add(showExcel);
+		panel.add(showQI);
 
 		// Icon at the Center
-		lista.add(rule);
-		lista.add(signal);
-		lista.add(value);
-		JPanel mid = criarCentro();
+		list.add(rule);
+		list.add(signal);
+		list.add(value);
+		JPanel mid = createMid();
 		
 
 		importExcel.addActionListener(new ActionListener() {
@@ -117,7 +114,7 @@ public class GUI {
 			}
 		});
 
-		send.addActionListener(new ActionListener() {
+		showCodeSmells.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -129,7 +126,7 @@ public class GUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				atualizar();
+				update();
 			}
 		});
 		
@@ -138,11 +135,11 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
 				nAt = 1;
-				refazGui();		
+				redoGUI();		
 			}
 		});
 		
-		//adicionar uma exceção no TextField
+		//add exception in TextField
 		/*
 		send.addActionListener(new ActionListener() {
 			
@@ -166,7 +163,6 @@ public class GUI {
 		frame.getContentPane().add(BorderLayout.NORTH, mb);
 		frame.getContentPane().add(BorderLayout.CENTER, mid);
 		frame.setVisible(true);
-		// ajusta a janela consoante o que está no centro
 		frame.pack();
 	}
 
@@ -196,57 +192,57 @@ public class GUI {
 		return excelFileView;
 	}
 	
-	private void refazGui() {
+	private void redoGUI() {
 		frame.removeAll();
 		frame.setVisible(false);
-		JFrame frameNova = new JFrame("Code Smells Detector");
-		setFrame(frameNova);
+		JFrame newFrame = new JFrame("Code Smells Detector");
+		setFrame(newFrame);
 		buildGUI();	
 	}
 
-	private JPanel criarCentro() {
+	private JPanel createMid() {
 		int i = 1;
 		JPanel mid = new JPanel();
 		mid.setLayout(new GridLayout(4,1));
 		
 		JPanel midMid = new JPanel();
 		midMid.setLayout(new FlowLayout());
-		for (Component o : getLista()) {
+		for (Component o : getList()) {
 			midMid.add(o);
 		}
 		mid.add(midMid);
 		while(i!= nAt && nAt != 5) {
-			JPanel jp = criarLayout();
+			JPanel jp = createLayout();
 			mid.add(jp);
 			i++;
 		}
 		return mid;
 
 	}
-	private static ArrayList<Component> novaLista(){
-		ArrayList<Component> listaAtualizada = new ArrayList<Component>();
-		listaAtualizada.add(new JComboBox(and_or));
-		listaAtualizada.add(new JComboBox(rules));
-		listaAtualizada.add(new JComboBox(signals));
-		listaAtualizada.add(new JTextField(5));
-		return listaAtualizada;
+	private static ArrayList<Component> newList(){
+		ArrayList<Component> updatedList = new ArrayList<Component>();
+		updatedList.add(new JComboBox(and_or));
+		updatedList.add(new JComboBox(rules));
+		updatedList.add(new JComboBox(signals));
+		updatedList.add(new JTextField(5));
+		return updatedList;
 	}
-	private JPanel criarLayout() {
+	private JPanel createLayout() {
 
-		JPanel novoPainel = new JPanel();
-		novoPainel.setLayout(new FlowLayout());
-		for (Component o : novaLista()) 
-			novoPainel.add(o);
-		return novoPainel;
+		JPanel newPanel = new JPanel();
+		newPanel.setLayout(new FlowLayout());
+		for (Component o : newList()) 
+			newPanel.add(o);
+		return newPanel;
 	}
 
-	private void atualizar() {
+	private void update() {
 		nAt++;
-		refazGui();
+		redoGUI();
 	}
 
-	public ArrayList<Component> getLista() {
-		return lista;
+	public ArrayList<Component> getList() {
+		return list;
 	}
 
 
