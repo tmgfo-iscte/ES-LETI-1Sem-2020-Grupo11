@@ -5,12 +5,14 @@ public class Rule {
 	private final boolean isAndOperator;
 	private final String metric;
 	private final float threshold;
+	private final boolean isAbove;
 	
 	
 	public Rule(boolean isAndOperator, String metric, float threshold) {
 		this.isAndOperator = isAndOperator;
 		this.metric = metric;
 		this.threshold = threshold;
+		this.isAbove = true;
 	}
 
 
@@ -27,5 +29,12 @@ public class Rule {
 	public float getThreshold() {
 		return threshold;
 	}
+
+
+	public boolean isAbove() {
+		return isAbove;
+	}
+	
+	
 	
 }
