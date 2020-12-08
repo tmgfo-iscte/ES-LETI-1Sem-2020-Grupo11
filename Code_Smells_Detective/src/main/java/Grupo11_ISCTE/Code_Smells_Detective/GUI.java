@@ -33,6 +33,7 @@ public class GUI {
 	private static JTextField value = new JTextField(5);
 	private JFrame frame = new JFrame("Code Smells Detector");
 	private int nAt = 1;
+	ArrayList<Component> updatedList = new ArrayList<Component>();
 	public String filePathToImport;
 
 	public GUI() {
@@ -135,6 +136,8 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
 				nAt = 1;
+				updatedList = new ArrayList<Component>();
+				value.setText("");
 				redoGUI();		
 			}
 		});
@@ -212,26 +215,73 @@ public class GUI {
 		}
 		mid.add(midMid);
 		while(i!= nAt && nAt != 5) {
-			JPanel jp = createLayout();
+			
+			ArrayList<Component> lista = new ArrayList<Component>();
+
+			if(!updatedList.isEmpty()&& updatedList.size()<12) {
+				if(updatedList.size()>=4 && updatedList.size()<=12) {
+				for(int j=0; j<4;j++) {
+					lista.add(updatedList.get(j));
+					
+				}
+				JPanel jp = createLayout(lista);
+				mid.add(jp);
+				newList();
+				
+				}
+				if(updatedList.size()>=8 && updatedList.size()<=12) {
+					lista = new ArrayList<Component>();
+				for(int j=4; j<8;j++) {
+					lista.add(updatedList.get(j));
+				
+				}
+				JPanel jp = createLayout(lista);
+		
+				mid.add(jp);
+		
+				}
+				if(updatedList.size()==12) {
+				
+					lista = new ArrayList<Component>();
+				for(int j=8; j<12;j++) {
+					lista.add(updatedList.get(j));
+				
+				}
+				JPanel jp = createLayout(lista);
+				
+				mid.add(jp);
+				
+				}
+			
+				i++;
+		}else {
+			lista = newList();
+			JPanel jp = createLayout(lista);
 			mid.add(jp);
-			i++;
+			}
+			return mid;
 		}
+		
 		return mid;
 
 	}
-	private static ArrayList<Component> newList(){
+	private ArrayList<Component> newList(){
 		ArrayList<Component> updatedList = new ArrayList<Component>();
 		updatedList.add(new JComboBox(and_or));
+		this.updatedList.add(updatedList.get(0));
 		updatedList.add(new JComboBox(rules));
+		this.updatedList.add(updatedList.get(1));
 		updatedList.add(new JComboBox(signals));
+		this.updatedList.add(updatedList.get(2));
 		updatedList.add(new JTextField(5));
+		this.updatedList.add(updatedList.get(3));
 		return updatedList;
 	}
-	private JPanel createLayout() {
+	private JPanel createLayout(ArrayList<Component> lista) {
 
 		JPanel newPanel = new JPanel();
 		newPanel.setLayout(new FlowLayout());
-		for (Component o : newList()) 
+		for (Component o : lista) 
 			newPanel.add(o);
 		return newPanel;
 	}
