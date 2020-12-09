@@ -8,11 +8,11 @@ public class Rule {
 	private final boolean isAbove;
 	
 	
-	public Rule(boolean isAndOperator, String metric, float threshold) {
+	public Rule(boolean isAndOperator, String metric, float threshold, boolean isAbove) {
 		this.isAndOperator = isAndOperator;
 		this.metric = metric;
 		this.threshold = threshold;
-		this.isAbove = true;
+		this.isAbove = isAbove;
 	}
 
 

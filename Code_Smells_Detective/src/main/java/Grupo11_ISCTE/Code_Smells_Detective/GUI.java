@@ -172,15 +172,15 @@ public class GUI {
 	private TableView setDetectionResultsView() {
 		String[] columnNames = { "methodID", "Own Detector", "iPlasma", "PMD" };
 
-		Rule locRule = new Rule(false, "LOC", 400);
+		//Rule locRule = new Rule(false, "LOC", 400);
 
-		Rule cycloRule = new Rule(true, "CYCLO", 50);
+		//Rule cycloRule = new Rule(true, "CYCLO", 50);
 
 		ArrayList<Rule> rules = new ArrayList<Rule>();
-		rules.add(locRule);
-		rules.add(cycloRule);
+		//rules.add(locRule);
+		//rules.add(cycloRule);
 		Detector detector = new Detector(filePathToImport, rules);
-		String[][] data = detector.generateData();
+		String[][] data = detector.generateLongMethodData();
 
 		TableView detectionResultsView = new TableView("Results", columnNames, data);
 

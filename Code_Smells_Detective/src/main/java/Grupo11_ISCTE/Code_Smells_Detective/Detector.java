@@ -20,12 +20,14 @@ public class Detector {
 	
 	
 	
-	private ArrayList<MethodEntity> longMethodsLOC(int threshold) {
+	private ArrayList<MethodEntity> longMethodsLOC(int threshold, boolean isAbove) {
 		
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
 		for(MethodEntity method : fileMethods) {
-			if(method.loc > threshold)
+			if(method.loc > threshold && isAbove)
+				longMethodsArray.add(method);
+			if(method.loc <= threshold && !isAbove)
 				longMethodsArray.add(method);
 		}
 		
@@ -35,11 +37,13 @@ public class Detector {
 	
 	
 	
-	private ArrayList<MethodEntity> longMethodsCYCLO(int threshold) {
+	private ArrayList<MethodEntity> longMethodsCYCLO(int threshold, boolean isAbove) {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
 		for(MethodEntity method : fileMethods) {
-			if(method.cyclo > threshold)
+			if(method.cyclo > threshold && isAbove)
+				longMethodsArray.add(method);
+			if(method.cyclo <= threshold && !isAbove)
 				longMethodsArray.add(method);
 		}
 		
@@ -47,11 +51,13 @@ public class Detector {
 		
 	}
 	
-	private ArrayList<MethodEntity> longMethodsATFD(int threshold) {
+	private ArrayList<MethodEntity> longMethodsATFD(int threshold, boolean isAbove) {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
 		for(MethodEntity method : fileMethods) {
-			if(method.atfd > threshold)
+			if(method.atfd > threshold && isAbove)
+				longMethodsArray.add(method);
+			if(method.atfd <= threshold && !isAbove)
 				longMethodsArray.add(method);
 		}
 		
@@ -60,11 +66,13 @@ public class Detector {
 	}
 	
 	
-	private ArrayList<MethodEntity> longMethodsLAA(float threshold) {
+	private ArrayList<MethodEntity> longMethodsLAA(float threshold, boolean isAbove) {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
 		for(MethodEntity method : fileMethods) {
-			if(method.laa > threshold)
+			if(method.laa > threshold && isAbove)
+				longMethodsArray.add(method);
+			if(method.laa <= threshold && !isAbove)
 				longMethodsArray.add(method);
 		}
 		
@@ -92,7 +100,7 @@ public class Detector {
 	}
 	
 	
-	public String[][] generateData() {
+	public String[][] generateLongMethodData() {
 		updateMethodEntities(aggregateDetections());
 		String[][] allMethods = new String [fileMethods.size()][4];
 		for(int i = 0; i < fileMethods.size(); i++) {
@@ -105,20 +113,31 @@ public class Detector {
 		return allMethods;
 	}
 	
+	public String[][] generateFeatureEnvyData() {
+		updateMethodEntities(aggregateDetections());
+		String[][] allMethods = new String [fileMethods.size()][2];
+		for(int i = 0; i < fileMethods.size(); i++) {
+			allMethods[i][0] = fileMethods.get(i).getMethodID();
+			allMethods[i][1] = Boolean.toString(fileMethods.get(i).getOwnDetectorResult());
+		}
+		
+		return allMethods;
+	}
+	
 	
 	private ArrayList <MethodEntity> executeRule(Rule rule) {
 		
 		if(rule.getMetric().equals("LOC"))
-			return longMethodsLOC((int)rule.getThreshold());
+			return longMethodsLOC((int)rule.getThreshold(), rule.isAbove());
 		
 		if(rule.getMetric().equals("CYCLO"))
-			return longMethodsCYCLO((int)rule.getThreshold());
+			return longMethodsCYCLO((int)rule.getThreshold(), rule.isAbove());
 		
 		if(rule.getMetric().equals("ATFD"))
-			return longMethodsATFD((int)rule.getThreshold());
+			return longMethodsATFD((int)rule.getThreshold(), rule.isAbove());
 	
 		if(rule.getMetric().equals("LAA"))
-			return longMethodsLAA(rule.getThreshold());
+			return longMethodsLAA(rule.getThreshold(), rule.isAbove());
 		
 		return null;
 	}

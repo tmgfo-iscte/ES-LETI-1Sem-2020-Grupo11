@@ -26,6 +26,7 @@ public class FinalGUI {
 	private static String[] rules = { "LOC", "CYCLO", "ATFD", "LAA" };
 	private static String[] signals = {">", "<="};
 	private static  String[] and_or = {"OR", "AND"};
+	private static String[] smells = {"Long Method", "Feature Envy"};
 	private JFrame frame = new JFrame("Code Smells Detector");
 	private JPanel centerPanel;
 	private int rulesCounter = 1;
@@ -98,11 +99,12 @@ public class FinalGUI {
 		
 		
 		
-		// Creating buttons for South Panel
+		// Creating elements for South Panel
 		JButton importExcel = new JButton("Import Excel");
 		JButton showCodeSmells = new JButton("Show Code Smells");
 		JButton showExcel = new JButton("Show Excel");
 		JButton showQI = new JButton ("Show Quality Indicators");
+		final JComboBox badSmellChooser = new JComboBox(smells);
 		
 		// Creating South Panel
 		JPanel southPanel = new JPanel();
@@ -111,6 +113,7 @@ public class FinalGUI {
 		southPanel.add(showCodeSmells);
 		southPanel.add(showExcel);
 		southPanel.add(showQI);
+		southPanel.add(badSmellChooser);
 		
 		// Adding southPanel to south of the frame
 		frame.add(southPanel,BorderLayout.SOUTH);
@@ -148,7 +151,13 @@ public class FinalGUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				printRules();
-				setDetectionResultsView().init();
+				if(badSmellChooser.getSelectedItem().equals("Long Method")) {
+					setDetectionResultsViewForLongMethod().init();	
+				}
+				if(badSmellChooser.getSelectedItem().equals("Feature Envy")) {
+					setDetectionResultsViewForFeatureEnvy().init();
+				}
+				
 			}
 		});
 		
@@ -238,23 +247,36 @@ public class FinalGUI {
 			boolean isAndOperator = operatorRuleBox.getSelectedItem().equals("AND");
 			String metric = (String) ruleBox.getSelectedItem();
 			float threshold = Float.parseFloat(textFieldBox.getText());
+			boolean isAbove = signalBox.getSelectedItem().equals(">");
 			
-			Rule rule = new Rule(isAndOperator, metric, threshold);
+			Rule rule = new Rule(isAndOperator, metric, threshold, isAbove);
 			rules.add(rule);
 		}
 		
 		return rules;
 	}
 	
-	private TableView setDetectionResultsView() {
+	private TableView setDetectionResultsViewForLongMethod() {
 		String[] columnNames = { "methodID", "Own Detector", "iPlasma", "PMD" };
 		ArrayList<Rule> rules = scanRules();
 		Detector detector = new Detector(filePathToImport, rules);
-		String[][] data = detector.generateData();
+		String[][] data = detector.generateLongMethodData();
 
 		TableView detectionResultsView = new TableView("Results", columnNames, data);
 
 		return detectionResultsView;
+	}
+	
+	private TableView setDetectionResultsViewForFeatureEnvy() {
+		String[] columnNames = { "methodID", "Own Detector"};
+		ArrayList<Rule> rules = scanRules();
+		Detector detector = new Detector(filePathToImport, rules);
+		String[][] data = detector.generateFeatureEnvyData();
+		
+		TableView detectionResultsView = new TableView("Results", columnNames, data);
+
+		return detectionResultsView;
+		
 	}
 
 	private TableView setExcelFileView() {
