@@ -124,24 +124,228 @@ public class Detector {
 		return allMethods;
 	}
 	
-	
-	private ArrayList <MethodEntity> executeRule(Rule rule) {
-		
-		if(rule.getMetric().equals("LOC"))
-			return longMethodsLOC((int)rule.getThreshold(), rule.isAbove());
-		
-		if(rule.getMetric().equals("CYCLO"))
-			return longMethodsCYCLO((int)rule.getThreshold(), rule.isAbove());
-		
-		if(rule.getMetric().equals("ATFD"))
-			return longMethodsATFD((int)rule.getThreshold(), rule.isAbove());
-	
-		if(rule.getMetric().equals("LAA"))
+	private ArrayList<MethodEntity> executeRule(Rule rule) {
+
+		if (rule.getMetric().equals("LOC"))
+			return longMethodsLOC((int) rule.getThreshold(), rule.isAbove());
+
+		if (rule.getMetric().equals("CYCLO"))
+			return longMethodsCYCLO((int) rule.getThreshold(), rule.isAbove());
+
+		if (rule.getMetric().equals("ATFD"))
+			return longMethodsATFD((int) rule.getThreshold(), rule.isAbove());
+
+		if (rule.getMetric().equals("LAA"))
 			return longMethodsLAA(rule.getThreshold(), rule.isAbove());
-		
+
 		return null;
+	}	
+	
+	// **********Quality indicators for Own Detector Long Method**********
+	public int numberOfDCIOwnDetector() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(method.ownDetectorResult && method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfDIIOwnDetector() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(method.ownDetectorResult && !method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfADCIOwnDetector() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(!method.ownDetectorResult && !method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfADIIOwnDetector() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(!method.ownDetectorResult && method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	// **********Quality indicators for Own Detector Feature Envy**********
+	public int numberOfDCIOwnDetectorFE() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(method.ownDetectorResult && method.isFeatureEnvy)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfDIIOwnDetectorFE() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(method.ownDetectorResult && !method.isFeatureEnvy)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfADCIOwnDetectorFE() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(!method.ownDetectorResult && !method.isFeatureEnvy)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfADIIOwnDetectorFE() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(!method.ownDetectorResult && method.isFeatureEnvy)
+				counter++;
+		}
+		return counter;
+	}
+	
+	// **********Quality indicators for iPlasma**********
+	
+	public int numberOfDCIiPlasma() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(method.iPlasmaResult && method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfDIIiPlasma() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(method.iPlasmaResult && !method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfADCIiPlasma() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(!method.iPlasmaResult && !method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfADIIiPlasma() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(!method.iPlasmaResult && method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	// **********Quality indicators for PMD**********
+	
+	public int numberOfDCIPMD() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(method.pmdResult && method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfDIIPMD() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(method.pmdResult && !method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfADCIPMD() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(!method.pmdResult && !method.isLongMethod)
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int numberOfADIIPMD() {
+		updateMethodEntities(aggregateDetections());
+		int counter = 0;
+		for(MethodEntity method: fileMethods) {
+			if(!method.pmdResult && method.isLongMethod)
+				counter++;
+		}
+		return counter;
 	}
 	
 	
+	public String[][] generateQualityDataForLongMethod() {
+		
+		String[][] data = new String [3][5];
+		
+		data[0][0] = "Own Detector";
+		data[0][1] = String.valueOf(numberOfDCIOwnDetector());
+		data[0][2] = String.valueOf(numberOfDIIOwnDetector());
+		data[0][3] = String.valueOf(numberOfADCIOwnDetector());
+		data[0][4] = String.valueOf(numberOfADIIOwnDetector());
+		
+		data[1][0] = "iPlasma";
+		data[1][1] = String.valueOf(numberOfDCIiPlasma());
+		data[1][2] = String.valueOf(numberOfDIIiPlasma());
+		data[1][3] = String.valueOf(numberOfADCIiPlasma());
+		data[1][4] = String.valueOf(numberOfADIIiPlasma());
+		
+		data[2][0] = "PMD";
+		data[2][1] = String.valueOf(numberOfDCIPMD());
+		data[2][2] = String.valueOf(numberOfDIIPMD());
+		data[2][3] = String.valueOf(numberOfADCIPMD());
+		data[2][4] = String.valueOf(numberOfADIIPMD());
+		
+		return data;
+	}
+	
 
+public String[][] generateQualityDataForFeatureEnvy() {
+		
+		String[][] data = new String [1][5];
+		
+		data[0][0] = "Own Detector";
+		data[0][1] = String.valueOf(numberOfDCIOwnDetectorFE());
+		data[0][2] = String.valueOf(numberOfDIIOwnDetectorFE());
+		data[0][3] = String.valueOf(numberOfADCIOwnDetectorFE());
+		data[0][4] = String.valueOf(numberOfADIIOwnDetectorFE());
+		
+		return data;
+	}
+	
+	
 }

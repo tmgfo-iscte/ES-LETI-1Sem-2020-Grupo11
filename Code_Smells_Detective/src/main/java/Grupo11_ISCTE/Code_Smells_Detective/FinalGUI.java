@@ -161,11 +161,21 @@ public class FinalGUI {
 			}
 		});
 		
+		showQI.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(badSmellChooser.getSelectedItem().equals("Long Method"))
+					setQualityIndicatorsViewForLongMethod().init();
+				if(badSmellChooser.getSelectedItem().equals("Feature Envy"))
+					setQualityIndicatorsViewForFeatureEnvy().init();
+			}
+		});
+		
 		addButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("add button clicked");
 				addRule();
 				rulesCounter++;
 				if(rulesCounter == 4)
@@ -264,6 +274,11 @@ public class FinalGUI {
 
 		TableView detectionResultsView = new TableView("Results", columnNames, data);
 
+		System.out.println("DCI value: " + detector.numberOfDCIOwnDetector());
+		System.out.println("DII value: " + detector.numberOfDIIOwnDetector());
+		System.out.println("ADCI value: " + detector.numberOfADCIOwnDetector());
+		System.out.println("ADII value: " + detector.numberOfADIIOwnDetector());
+		
 		return detectionResultsView;
 	}
 	
@@ -278,6 +293,30 @@ public class FinalGUI {
 		return detectionResultsView;
 		
 	}
+	
+	private TableView setQualityIndicatorsViewForLongMethod() {
+		
+		String[] columnNames = {"Tool", "DCI", "DII", "ADCI", "ADII"};
+		ArrayList<Rule> rules = scanRules();
+		Detector detector = new Detector(filePathToImport, rules);
+		String[][] data = detector.generateQualityDataForLongMethod();
+		
+		TableView qualityResultsView = new TableView("Quality Indicators For Long Method", columnNames, data);
+		
+		return qualityResultsView;
+	}
+	
+	private TableView setQualityIndicatorsViewForFeatureEnvy() {
+
+		String[] columnNames = { "Tool", "DCI", "DII", "ADCI", "ADII" };
+		ArrayList<Rule> rules = scanRules();
+		Detector detector = new Detector(filePathToImport, rules);
+		String[][] data = detector.generateQualityDataForFeatureEnvy();
+
+		TableView qualityResultsView = new TableView("Quality Indicators For Feature Envy", columnNames, data);
+
+		return qualityResultsView;
+	}	
 
 	private TableView setExcelFileView() {
 		FileParser fileParser = new FileParser(filePathToImport);
