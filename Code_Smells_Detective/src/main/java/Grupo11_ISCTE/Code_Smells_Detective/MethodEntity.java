@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 public class MethodEntity {
 
-	String methodID;
-	String belongsToPack;
-	String belongsToClass;
-	String methodName;
-	int loc;
-	int cyclo;
-	int atfd;
-	float laa;
-	boolean isLongMethod;
-	boolean iPlasmaResult;
-	boolean pmdResult;
-	boolean isFeatureEnvy;
-	boolean ownDetectorResult;
+	private String methodID;
+	private String belongsToPack;
+	private String belongsToClass;
+	private String methodName;
+	private int loc;
+	private int cyclo;
+	private int atfd;
+	private float laa;
+	private boolean isLongMethod;
+	private boolean iPlasmaResult;
+	private boolean pmdResult;
+	private boolean isFeatureEnvy;
+	private boolean ownDetectorResult;
 	
 	
 	public MethodEntity(ArrayList<String> data) {
@@ -43,6 +43,60 @@ public class MethodEntity {
 		
 		return (string.equals("VERDADEIRO") || string.equals("TRUE")); 	
 		
+	}
+
+
+
+	public String getBelongsToPack() {
+		return belongsToPack;
+	}
+
+
+
+	public String getBelongsToClass() {
+		return belongsToClass;
+	}
+
+
+
+	public String getMethodName() {
+		return methodName;
+	}
+
+
+
+	public int getLoc() {
+		return loc;
+	}
+
+
+
+	public int getCyclo() {
+		return cyclo;
+	}
+
+
+
+	public int getAtfd() {
+		return atfd;
+	}
+
+
+
+	public float getLaa() {
+		return laa;
+	}
+
+
+
+	public boolean isLongMethod() {
+		return isLongMethod;
+	}
+
+
+
+	public boolean isFeatureEnvy() {
+		return isFeatureEnvy;
 	}
 
 

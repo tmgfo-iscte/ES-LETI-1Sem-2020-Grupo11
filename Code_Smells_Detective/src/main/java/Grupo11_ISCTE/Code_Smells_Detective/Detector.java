@@ -25,9 +25,9 @@ public class Detector {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
 		for(MethodEntity method : fileMethods) {
-			if(method.loc > threshold && isAbove)
+			if(method.getLoc() > threshold && isAbove)
 				longMethodsArray.add(method);
-			if(method.loc <= threshold && !isAbove)
+			if(method.getLoc() <= threshold && !isAbove)
 				longMethodsArray.add(method);
 		}
 		
@@ -41,9 +41,9 @@ public class Detector {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
 		for(MethodEntity method : fileMethods) {
-			if(method.cyclo > threshold && isAbove)
+			if(method.getCyclo() > threshold && isAbove)
 				longMethodsArray.add(method);
-			if(method.cyclo <= threshold && !isAbove)
+			if(method.getCyclo() <= threshold && !isAbove)
 				longMethodsArray.add(method);
 		}
 		
@@ -55,9 +55,9 @@ public class Detector {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
 		for(MethodEntity method : fileMethods) {
-			if(method.atfd > threshold && isAbove)
+			if(method.getAtfd() > threshold && isAbove)
 				longMethodsArray.add(method);
-			if(method.atfd <= threshold && !isAbove)
+			if(method.getAtfd() <= threshold && !isAbove)
 				longMethodsArray.add(method);
 		}
 		
@@ -70,9 +70,9 @@ public class Detector {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
 		for(MethodEntity method : fileMethods) {
-			if(method.laa > threshold && isAbove)
+			if(method.getLaa() > threshold && isAbove)
 				longMethodsArray.add(method);
-			if(method.laa <= threshold && !isAbove)
+			if(method.getLaa() <= threshold && !isAbove)
 				longMethodsArray.add(method);
 		}
 		
@@ -146,7 +146,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(method.ownDetectorResult && method.isLongMethod)
+			if(method.getOwnDetectorResult() && method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -156,7 +156,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(method.ownDetectorResult && !method.isLongMethod)
+			if(method.getOwnDetectorResult() && !method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -166,7 +166,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(!method.ownDetectorResult && !method.isLongMethod)
+			if(!method.getOwnDetectorResult() && !method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -176,7 +176,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(!method.ownDetectorResult && method.isLongMethod)
+			if(!method.getOwnDetectorResult() && method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -187,7 +187,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(method.ownDetectorResult && method.isFeatureEnvy)
+			if(method.getOwnDetectorResult() && method.isFeatureEnvy())
 				counter++;
 		}
 		return counter;
@@ -197,7 +197,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(method.ownDetectorResult && !method.isFeatureEnvy)
+			if(method.getOwnDetectorResult() && !method.isFeatureEnvy())
 				counter++;
 		}
 		return counter;
@@ -207,7 +207,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(!method.ownDetectorResult && !method.isFeatureEnvy)
+			if(!method.getOwnDetectorResult() && !method.isFeatureEnvy())
 				counter++;
 		}
 		return counter;
@@ -217,7 +217,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(!method.ownDetectorResult && method.isFeatureEnvy)
+			if(!method.getOwnDetectorResult() && method.isFeatureEnvy())
 				counter++;
 		}
 		return counter;
@@ -229,7 +229,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(method.iPlasmaResult && method.isLongMethod)
+			if(method.getiPlasmaResult() && method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -239,7 +239,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(method.iPlasmaResult && !method.isLongMethod)
+			if(method.getiPlasmaResult() && !method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -249,7 +249,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(!method.iPlasmaResult && !method.isLongMethod)
+			if(!method.getiPlasmaResult() && !method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -259,7 +259,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(!method.iPlasmaResult && method.isLongMethod)
+			if(!method.getiPlasmaResult() && method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -271,7 +271,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(method.pmdResult && method.isLongMethod)
+			if(method.getPmdResult() && method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -281,7 +281,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(method.pmdResult && !method.isLongMethod)
+			if(method.getPmdResult() && !method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -291,7 +291,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(!method.pmdResult && !method.isLongMethod)
+			if(!method.getPmdResult() && !method.isLongMethod())
 				counter++;
 		}
 		return counter;
@@ -301,7 +301,7 @@ public class Detector {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
 		for(MethodEntity method: fileMethods) {
-			if(!method.pmdResult && method.isLongMethod)
+			if(!method.getPmdResult() && method.isLongMethod())
 				counter++;
 		}
 		return counter;
