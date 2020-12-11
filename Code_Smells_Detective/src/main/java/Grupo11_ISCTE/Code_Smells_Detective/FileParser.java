@@ -83,25 +83,4 @@ public class FileParser {
 		
 	}
 	
-	
-	public void printFile(){
-		
-			for (Row row : sheet) {
-				for (Cell cell : row) {
-					String cellValue = dataFormatter.formatCellValue(cell);
-					System.out.print(StringUtilities.fitStringToLength(cellValue,20) + "\t\t");
-				}
-
-				System.out.println();
-			}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

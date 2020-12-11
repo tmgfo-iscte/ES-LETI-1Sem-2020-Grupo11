@@ -1,4 +1,5 @@
-package Grupo11_ISCTE.Code_Smells_Detective;
+package Grupo11_ISCTE.Code_Smells_Detective_FrontEnd;
+import Grupo11_ISCTE.Code_Smells_Detective.*;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -150,7 +151,6 @@ public class FinalGUI {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				printRules();
 				if(badSmellChooser.getSelectedItem().equals("Long Method")) {
 					setDetectionResultsViewForLongMethod().init();	
 				}
@@ -218,33 +218,6 @@ public class FinalGUI {
 		ruleComponents.add(textFieldBox);
 	}
 	
-	private void printRules() {
-	
-		for(int i = 0; i < ruleComponents.size(); i++) {
-			
-			if(i%4 == 0) {
-				JComboBox operatorRuleBox = (JComboBox) ruleComponents.get(i);
-				System.out.print("operator: " + operatorRuleBox.getSelectedItem());
-			}
-			
-			if(i%4 == 1) {
-				JComboBox ruleBox = (JComboBox) ruleComponents.get(i);
-				System.out.print(", rule: "+ ruleBox.getSelectedItem());
-			}
-			
-			if(i%4 == 2) {
-				JComboBox signalBox = (JComboBox) ruleComponents.get(i);
-				System.out.print(" , signal: " + signalBox.getSelectedItem());
-			}
-			
-			if(i%4 == 3) {
-				JTextField textFieldBox = (JTextField) ruleComponents.get(i);
-				System.out.println(" , value: " + textFieldBox.getText());
-			}
-			
-		}
-		
-	}
 	
 	private ArrayList<Rule> scanRules() {
 		ArrayList<Rule> rules = new ArrayList<Rule>();
@@ -273,11 +246,6 @@ public class FinalGUI {
 		String[][] data = detector.generateLongMethodData();
 
 		TableView detectionResultsView = new TableView("Results", columnNames, data);
-
-		System.out.println("DCI value: " + detector.numberOfDCIOwnDetector());
-		System.out.println("DII value: " + detector.numberOfDIIOwnDetector());
-		System.out.println("ADCI value: " + detector.numberOfADCIOwnDetector());
-		System.out.println("ADII value: " + detector.numberOfADIIOwnDetector());
 		
 		return detectionResultsView;
 	}

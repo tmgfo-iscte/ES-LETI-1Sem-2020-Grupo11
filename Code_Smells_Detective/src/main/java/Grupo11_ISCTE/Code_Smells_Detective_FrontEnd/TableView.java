@@ -1,4 +1,4 @@
-package Grupo11_ISCTE.Code_Smells_Detective;
+package Grupo11_ISCTE.Code_Smells_Detective_FrontEnd;
 
 import java.awt.Color;
 import java.awt.Component;
