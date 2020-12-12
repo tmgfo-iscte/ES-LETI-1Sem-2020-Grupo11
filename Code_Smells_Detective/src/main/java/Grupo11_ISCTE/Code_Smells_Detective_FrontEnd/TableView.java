@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellRenderer;
 
 /** Represents a Table View.
-* The Table View (...)
+* The Table View offers methods to build a Jtable and present it
 * @author Marcelo Pereira
 * @version 1.0
 * @since 1.0
@@ -28,7 +28,7 @@ public class TableView {
 	String[][] data;
 	
 	/** Class Constructor.
-	* Creates a Table View with the specified title, columns names and data.
+	* Creates a instance of the class Table View with the specified title, columns names and data.
 	* @param title The main frame title.
 	* @param columnNames The column names.
 	* @param data The represented data.
@@ -39,7 +39,9 @@ public class TableView {
 		this.columnNames = columnNames;
 		this.data = data;
 	}
-	
+	/**
+	 * This method launches a new thread which builds the GUI.
+	 */
 	public void init() {
 		Runnable runGUI = new Runnable() {
 			
@@ -54,6 +56,7 @@ public class TableView {
 	
 	/**
 	* This method creates the graphic interface.
+	* @return nothing
 	*/
 
 	private void buildGUI() {
@@ -78,7 +81,7 @@ public class TableView {
 	}
 	
 	/**
-	* This method creates a table
+	* This method creates a JTable
 	* using @param data and @param columnNames.
 	* Also defines background colors for the different truth values 
 	* (they can be true or false).

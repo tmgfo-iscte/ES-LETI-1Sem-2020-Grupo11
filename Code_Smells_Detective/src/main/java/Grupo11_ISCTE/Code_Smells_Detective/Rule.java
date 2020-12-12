@@ -10,7 +10,7 @@ package Grupo11_ISCTE.Code_Smells_Detective;
 
 public class Rule {
 
-	/** Represents variables whose value can't be modified.
+	/** Represents variables whose values can't be modified.
 	*/
 	
 	private final boolean isAndOperator;
@@ -35,7 +35,9 @@ public class Rule {
 	}
 
 	/**
-	* This method get the response for the question "Is AND operator?".
+	* This method get logical operator that should be used in the rule.
+	* It returns true if the logical operator AND should be used.
+	* It returns false if the logical operator OR should be used. 
 	* @return a boolean.
 	*/
 	
@@ -62,7 +64,9 @@ public class Rule {
 	}
 
 	/**
-	* This method get the response for the question "Is above?".
+	* This method get signal operator that should be used in the rule.
+	* It returns true if the signal operator 'greater than' should be used.
+	* It returns false if the signal operator 'less than or equal to' should be used.
 	* @return a boolean.
 	*/
 

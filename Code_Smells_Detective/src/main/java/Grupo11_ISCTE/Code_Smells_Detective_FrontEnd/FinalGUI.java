@@ -80,12 +80,22 @@ public class FinalGUI {
 	
 	public String filePathToImport;
 
+	/**
+	 * Represent the maximum number of rules that a user can insert
+	 * @default 4
+	 */
+	private static final int MAX_RULES = 4;
 	
+	/**
+	 * Creates an instance of the class FinalGUI seting the field filePathToImport to a void String.
+	 */
 	public FinalGUI() {
 		filePathToImport = "";
 	}
 	
-	
+	/**
+	 * This method launches a new thread which builds the GUI.
+	 */
 	public void init() {
 		Runnable runGUI = new Runnable() {
 
@@ -101,7 +111,6 @@ public class FinalGUI {
 	
 	/**
 	* This method creates the graphic interface.
-	* @return nothing.
 	*/
 	
 	public void buildGUI() {
@@ -198,7 +207,6 @@ public class FinalGUI {
 		/** Adds a listener to the button importExcel.
 		* When clicking the button, the app will show the files the user has
 		* ordered by directories, and the user should select the one he pretends.
-		* !!not implemented!! @default should force the user to only choose an Excel File
 		*/
 		
 		importExcel.addActionListener(new ActionListener() {
@@ -219,7 +227,6 @@ public class FinalGUI {
 		/** Adds a listener to the button showExcel.
 		* When clicking the button, the app will open and show the Excel file 
 		* that the user chose previously.
-		* !!not implemented!! @default should force the button to only open an Excel File
 		*/
 		
 		showExcel.addActionListener(new ActionListener() {
@@ -269,7 +276,6 @@ public class FinalGUI {
 		* underneath the previous rule.
 		* @default one rule already it's created
 		* When 4 rules are created, the user can't add more rules.
-		* !!not implemented!! variable rulesCounterMAX by @default 4
 		*/
 		
 		addButton.addActionListener(new ActionListener() {
@@ -278,7 +284,7 @@ public class FinalGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				addRule();
 				rulesCounter++;
-				if(rulesCounter == 4)
+				if(rulesCounter == MAX_RULES)
 					addButton.setEnabled(false);;
 			}
 		});
@@ -332,8 +338,8 @@ public class FinalGUI {
 	}
 
 	/**
-	* This method prints the rules.
-	* @return an ArrayList<Rule>
+	* This method scans the rules inserted by the user.
+	* @return an ArrayList with the rules inserted by the user.
 	*/
 	
 	private ArrayList<Rule> scanRules() {
@@ -357,7 +363,7 @@ public class FinalGUI {
 	}
 	
 	/**
-	* This method sets the detection results for the code smell "Long Method".
+	* This method sets a view with the detection results for the code smell "Long Method".
 	* @return a TableView.
 	*/
 	
@@ -373,7 +379,7 @@ public class FinalGUI {
 	}
 	
 	/**
-	* This method sets the detection results for the code smell "Feature Envy".
+	* This method sets a view with the detection results for the code smell "Feature Envy".
 	* @return a TableView.
 	*/
 	
@@ -390,7 +396,7 @@ public class FinalGUI {
 	}
 	
 	/**
-	* This method sets the quality indicator for the code smell "Long Method".
+	* This method sets a view with the quality indicators for the code smell "Long Method".
 	* @return a TableView.
 	*/
 	
@@ -407,7 +413,7 @@ public class FinalGUI {
 	}
 	
 	/**
-	* This method sets the quality indicator for the code smell "Feature Envy".
+	* This method sets a view with the quality indicators for the code smell "Feature Envy".
 	* @return a TableView.
 	*/
 	

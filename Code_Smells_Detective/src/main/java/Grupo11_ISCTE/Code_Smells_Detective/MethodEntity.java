@@ -2,8 +2,8 @@ package Grupo11_ISCTE.Code_Smells_Detective;
 
 import java.util.ArrayList;
 
-/** Represents the (...).
-* The..
+/** Represents the Method Entity.
+* The method entity is a class that when instanced has the several fields of data present in the Excel file for a single method.
 * @author Marcelo Pereira
 * @version 1.0
 * @since 1.0
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class MethodEntity {
 
 	/**
-	 * (...) 
+	 * The following attributes represent all the field of a method that are present in the Excel File. 
 	*/
 	
 	private String methodID;
@@ -30,11 +30,10 @@ public class MethodEntity {
 	private boolean ownDetectorResult;
 	
 	/** Class Constructor.
-	* Creates an ArrayList whose type is String
-	* and adds there all the variables that were defined above.
-	* Also converts all the types that aren't String into String.
-	* @param data The ArrayList with all the data.
-	* @default null 
+	* Receives an ArrayList with the data found in the Excel File for a single Method
+	* and creates an instance of the Method Entity with that data.
+	* 
+	* @param data The ArrayList with all the data from the Excel File for a single method.
 	*/
 	
 	public MethodEntity(ArrayList<String> data) {
@@ -56,7 +55,8 @@ public class MethodEntity {
 	}
 	
 	/** 
-	* This method translates makes a bridge between portuguese and english language.
+	* This method is used to translate VERDADEIRO(Portuguese) and TRUE(English) to the appropriate boolean value.
+	* @param string with the value of the Excel Field
 	* @return a boolean.
 	*/
 	
@@ -67,7 +67,7 @@ public class MethodEntity {
 	}
 
 	/**
-	 * This method..
+	 * This method return the package to which the method belongs
 	 * @return a String.
 	 */
 
@@ -76,7 +76,7 @@ public class MethodEntity {
 	}
 
 	/**
-	 * This method..
+	 * This method return the class to which the method belongs
 	 * @return String.
 	 */
 
@@ -186,7 +186,6 @@ public class MethodEntity {
 	/**
 	* This method sets the ownDetector result.
 	* @param ownDetectorResult.
-	* @return nothing.
 	*/
 
 	public void setOwnDetectorResult(boolean ownDetectorResult) {

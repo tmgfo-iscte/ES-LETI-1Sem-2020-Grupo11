@@ -13,7 +13,13 @@ import java.util.Set;
 */
 
 public class ListUtilities {
-
+	/**
+	 * This method makes the union of the objects of two lists.
+	 * @param <T> is any kind of object
+	 * @param list1 is the first list
+	 * @param list2 is the second list
+	 * @return a list with the union of the objects of the two lists.
+	 */
 	public static <T> List<T> union(List<T> list1, List<T> list2) {
         Set<T> set = new HashSet<T>();
 
@@ -23,6 +29,13 @@ public class ListUtilities {
         return new ArrayList<T>(set);
     }
 
+	/**
+	 * This method makes the intersection between the objects of two lists.
+	 * @param <T> is any kind of object.
+	 * @param list1 is the first list.
+	 * @param list2 is the second list.
+	 * @return a list with the intersection between the objects of the two lists.
+	 */
     public static <T> List<T> intersection(List<T> list1, List<T> list2) {
         List<T> list = new ArrayList<T>();
 
