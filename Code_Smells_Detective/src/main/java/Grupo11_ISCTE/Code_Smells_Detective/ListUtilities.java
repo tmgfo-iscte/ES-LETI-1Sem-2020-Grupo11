@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /** Represents the list of utilities.
-* This list (...).
+* This class offers static methods to make unions and intersections of the contents of Lists (e.g. ArrayLists).
 * @author Marcelo Pereira
 * @version 1.0
 * @since 1.0
