@@ -12,12 +12,29 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+/** Represents the File Parser.
+* This File Parser (...).
+* @author Marcelo Pereira
+* @version 1.0
+* @since 1.0
+*/
+
 public class FileParser {
 
+	/**
+	*/
+	
 	private Workbook workbook;
 	private Sheet sheet;
 	private DataFormatter dataFormatter;
 	
+	/** Class Constructor.
+	* Creates a File Parser
+	* and (...)
+	* @filePath The file path the user wants to use.
+	* @exception EncryptedDocumentException if can't process encrypted word file.
+	* @exception IOException if the user is trying to read a file that doesn't exist (On input error).
+	*/
 	
 	public FileParser(String filePath) {
 		try {
@@ -31,6 +48,12 @@ public class FileParser {
 		}
 		
 	}
+	
+	/**
+	* This method scans the file in order to take the methods.
+	* (...)
+	* @return a ArrayList<MethodEntity>.
+	*/
 		
 	public ArrayList<MethodEntity> scanFileForMethods() {
 
@@ -49,6 +72,14 @@ public class FileParser {
 		
 		return allMethods;
 	}
+	
+
+	/**
+	* This method contains all the data distributed in a matrix
+	* that was originally in the variable sheet.
+	* (...)
+	* @return a String matrix.
+	*/
 	
 	public String[][] dataArray() {
 		
@@ -69,6 +100,11 @@ public class FileParser {
 	
 	}
 	
+	/**
+	* This method puts the column names in an array.
+	* (...)
+	* @return a String array.
+	*/
 	
 	public String[] columnNamesArray() {
 		

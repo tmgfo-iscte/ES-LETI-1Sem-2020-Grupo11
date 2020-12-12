@@ -5,12 +5,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/** Represents the Code Smells Detector.
+* (...)
+* @author Marcelo Pereira
+* @version 3.0
+* @since 1.0
+*/
+
 public class Detector {
 	
+	/** Represents variables whose value can't be modified.
+	* Represents an ArrayList of rules whose type is Rule
+	* and an ArrayList of method entities whose type is MethodEntity.
+	*/
 	
 	private final ArrayList<Rule> arrayOfRules;
-	
 	private final ArrayList<MethodEntity> fileMethods;
+	
+	/** Class Constructor.
+	* Creates a Detector with the specified File to Import and an Array of Rules.
+	* Also creates a File Parser.
+	* @param fileToImport The name of the file to import.
+	* @param arrayOfRules The array of rules.
+	*/
 	
 	 public Detector(String fileToImport, ArrayList<Rule> arrayOfRules) {
 		 FileParser fileParser = new FileParser(fileToImport);
@@ -18,7 +35,13 @@ public class Detector {
 		 this.arrayOfRules = arrayOfRules;
 	}
 	
-	
+	 /**
+		* This method relates the Code Smell 'Long Method' with the threshold 'LOC' (Lines Of Code). 
+		* (...)
+		* @param threshold.
+		* @param isAbove.
+		* @return a ArrayList<MethodEntity>.
+		*/
 	
 	private ArrayList<MethodEntity> longMethodsLOC(int threshold, boolean isAbove) {
 		
@@ -35,7 +58,13 @@ public class Detector {
 		
 	}
 	
-	
+	/**
+	* This method relates the Code Smell 'Long Method' with the threshold 'CYCLO'(Cyclomatic Complexity). 
+	* (...)
+	* @param threshold.
+	* @param isAbove.
+	* @return a ArrayList<MethodEntity>.
+	*/
 	
 	private ArrayList<MethodEntity> longMethodsCYCLO(int threshold, boolean isAbove) {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
@@ -51,6 +80,14 @@ public class Detector {
 		
 	}
 	
+	/**
+	* This method relates the Code Smell 'Long Method' with the threshold 'ATFD'(Access to foreign data). 
+	* (...)
+	* @param threshold.
+	* @param isAbove.
+	* @return a ArrayList<MethodEntity>.
+	*/
+	
 	private ArrayList<MethodEntity> longMethodsATFD(int threshold, boolean isAbove) {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
 		
@@ -65,6 +102,13 @@ public class Detector {
 		
 	}
 	
+	/**
+	* This method relates the Code Smell 'Long Method' with the threshold 'LAA'(Locality of Attribute Accesses). 
+	* (...)
+	* @param threshold.
+	* @param isAbove.
+	* @return a ArrayList<MethodEntity>.
+	*/
 	
 	private ArrayList<MethodEntity> longMethodsLAA(float threshold, boolean isAbove) {
 		ArrayList<MethodEntity> longMethodsArray = new ArrayList<MethodEntity>(); 
@@ -80,6 +124,12 @@ public class Detector {
 		
 	}
 	
+	/**
+	* This method aggregates the Code Smells Detections into a single ArrayList named @var result.
+	* (...)
+	* @return a ArrayList<MethodEntity>.
+	*/
+	
 	private ArrayList <MethodEntity> aggregateDetections(){
 		
 		ArrayList<MethodEntity> result = new ArrayList<MethodEntity>();
@@ -93,12 +143,22 @@ public class Detector {
 		return result;
 	}
 	
+	/**
+	* This method updates the Method Entities. 
+	* @param detections.
+	* @return nothing.
+	*/
+	
 	private void updateMethodEntities(ArrayList <MethodEntity> detections) {
 		for(MethodEntity method : detections) {
 			method.setOwnDetectorResult(true);
 		}
 	}
 	
+	/**
+	* This method generates 'Long Method' data. 
+	* @return a String matrix.
+	*/
 	
 	public String[][] generateLongMethodData() {
 		updateMethodEntities(aggregateDetections());
@@ -113,6 +173,11 @@ public class Detector {
 		return allMethods;
 	}
 	
+	/**
+	* This method generates 'Feature Envy' data. 
+	* @return a String matrix.
+	*/
+	
 	public String[][] generateFeatureEnvyData() {
 		updateMethodEntities(aggregateDetections());
 		String[][] allMethods = new String [fileMethods.size()][2];
@@ -123,6 +188,12 @@ public class Detector {
 		
 		return allMethods;
 	}
+	
+	/**
+	* This method executes the given rule by the user. 
+	* @param rule
+	* @return an ArrayList<MethodEntity>.
+	*/
 	
 	private ArrayList<MethodEntity> executeRule(Rule rule) {
 
@@ -141,7 +212,15 @@ public class Detector {
 		return null;
 	}	
 	
-	// **********Quality indicators for Own Detector Long Method**********
+	/**
+	* Quality indicators for Own Detector 'Long Method'.
+	*/
+	
+	/** 
+	* This method gets the number of DCI for OwnDetector 'Long Method'. 
+	* @return a int that represents the counter.
+	*/
+	
 	public int numberOfDCIOwnDetector() {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
@@ -151,6 +230,11 @@ public class Detector {
 		}
 		return counter;
 	}
+	
+	/** 
+	* This method gets the number of DII for OwnDetector 'Long Method'. 
+	* @return a int that represents the counter.
+	*/
 	
 	public int numberOfDIIOwnDetector() {
 		updateMethodEntities(aggregateDetections());
@@ -162,6 +246,11 @@ public class Detector {
 		return counter;
 	}
 	
+	/** 
+	* This method gets the number of ADCI for OwnDetector 'Long Method'. 
+	* @return a int that represents the counter.
+	*/
+	
 	public int numberOfADCIOwnDetector() {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
@@ -171,6 +260,11 @@ public class Detector {
 		}
 		return counter;
 	}
+	
+	/** 
+	* This method gets the number of ADII for OwnDetector 'Long Method'. 
+	* @return a int that represents the counter.
+	*/
 	
 	public int numberOfADIIOwnDetector() {
 		updateMethodEntities(aggregateDetections());
@@ -182,7 +276,15 @@ public class Detector {
 		return counter;
 	}
 	
-	// **********Quality indicators for Own Detector Feature Envy**********
+	/**
+	* Quality indicators for Own Detector 'Feature Envy'.
+	*/
+	
+	/** 
+	* This method gets the number of DCI for OwnDetector 'Feature Envy'. 
+	* @return a int that represents the counter.
+	*/
+	
 	public int numberOfDCIOwnDetectorFE() {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
@@ -192,6 +294,11 @@ public class Detector {
 		}
 		return counter;
 	}
+	
+	/** 
+	* This method gets the number of DII for OwnDetector 'Feature Envy'. 
+	* @return a int that represents the counter.
+	*/
 	
 	public int numberOfDIIOwnDetectorFE() {
 		updateMethodEntities(aggregateDetections());
@@ -203,6 +310,11 @@ public class Detector {
 		return counter;
 	}
 	
+	/** 
+	* This method gets the number of ADCI for OwnDetector 'Feature Envy'. 
+	* @return a int that represents the counter.
+	*/
+	
 	public int numberOfADCIOwnDetectorFE() {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
@@ -212,6 +324,11 @@ public class Detector {
 		}
 		return counter;
 	}
+	
+	/** 
+	* This method gets the number of ADII for OwnDetector 'Feature Envy'. 
+	* @return a int that represents the counter.
+	*/
 	
 	public int numberOfADIIOwnDetectorFE() {
 		updateMethodEntities(aggregateDetections());
@@ -223,7 +340,14 @@ public class Detector {
 		return counter;
 	}
 	
-	// **********Quality indicators for iPlasma**********
+	/**
+	* Quality indicators for iPlasma.
+	*/
+	
+	/** 
+	* This method gets the number of DCI for iPlasma. 
+	* @return a int that represents the counter.
+	*/
 	
 	public int numberOfDCIiPlasma() {
 		updateMethodEntities(aggregateDetections());
@@ -235,6 +359,11 @@ public class Detector {
 		return counter;
 	}
 	
+	/** 
+	* This method gets the number of DII for iPlasma. 
+	* @return a int that represents the counter.
+	*/
+	
 	public int numberOfDIIiPlasma() {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
@@ -244,6 +373,11 @@ public class Detector {
 		}
 		return counter;
 	}
+	
+	/** 
+	* This method gets the number of ADCI for iPlasma. 
+	* @return a int that represents the counter.
+	*/
 	
 	public int numberOfADCIiPlasma() {
 		updateMethodEntities(aggregateDetections());
@@ -255,6 +389,11 @@ public class Detector {
 		return counter;
 	}
 	
+	/** 
+	* This method gets the number of ADII for iPlasma. 
+	* @return a int that represents the counter.
+	*/
+	
 	public int numberOfADIIiPlasma() {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
@@ -265,7 +404,14 @@ public class Detector {
 		return counter;
 	}
 	
-	// **********Quality indicators for PMD**********
+	/**
+	* Quality indicators for PMD.
+	*/
+	
+	/** 
+	* This method gets the number of DCI for PMD. 
+	* @return a int that represents the counter.
+	*/
 	
 	public int numberOfDCIPMD() {
 		updateMethodEntities(aggregateDetections());
@@ -277,6 +423,11 @@ public class Detector {
 		return counter;
 	}
 	
+	/** 
+	* This method gets the number of DII for PMD. 
+	* @return a int that represents the counter.
+	*/
+	
 	public int numberOfDIIPMD() {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
@@ -286,6 +437,11 @@ public class Detector {
 		}
 		return counter;
 	}
+	
+	/** 
+	* This method gets the number of ADCI for PMD. 
+	* @return a int that represents the counter.
+	*/
 	
 	public int numberOfADCIPMD() {
 		updateMethodEntities(aggregateDetections());
@@ -297,6 +453,11 @@ public class Detector {
 		return counter;
 	}
 	
+	/** 
+	* This method gets the number of ADII for PMD. 
+	* @return a int that represents the counter.
+	*/
+	
 	public int numberOfADIIPMD() {
 		updateMethodEntities(aggregateDetections());
 		int counter = 0;
@@ -307,6 +468,10 @@ public class Detector {
 		return counter;
 	}
 	
+	/** 
+	* This method generates the quality data for the Code Smell 'Long Method'. 
+	* @return a String matrix
+	*/
 	
 	public String[][] generateQualityDataForLongMethod() {
 		
@@ -333,8 +498,12 @@ public class Detector {
 		return data;
 	}
 	
-
-public String[][] generateQualityDataForFeatureEnvy() {
+	/** 
+	* This method generates the quality data for the Code Smell 'Feature Envy'. 
+	* @return a String matrix
+	*/
+	
+	public String[][] generateQualityDataForFeatureEnvy() {
 		
 		String[][] data = new String [1][5];
 		

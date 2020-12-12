@@ -22,16 +22,62 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileSystemView;
 
+/** Represents the interface of our Code Smells Detector project.
+	* The CodeSmellsDetector program implements an application that
+	* evaluates the quality of code used in software projects
+	* using the detection of code smells.
+	* @author Teresa Felício
+	* @author Marcelo Pereira
+	* @version 3.0
+	* @since 1.0
+ */
+
 public class FinalGUI {
 
+	/** Represents an array of software metrics whose type is String.
+	*/
+	
 	private static String[] rules = { "LOC", "CYCLO", "ATFD", "LAA" };
+	
+	/** Represents an array of mathematical symbols whose type is String.
+	*/
+	
 	private static String[] signals = {">", "<="};
+	
+	/** Represents an array of logical operations whose type is String.
+	*/
+	
 	private static  String[] and_or = {"OR", "AND"};
+	
+	/** Represents an array of code smells whose type is String.
+	*/
+	
 	private static String[] smells = {"Long Method", "Feature Envy"};
+	
+	/** Represents the main frame of our GUI.
+	*/
+	
 	private JFrame frame = new JFrame("Code Smells Detector");
+	
+	/** Represents the central panel.
+	*/
+	
 	private JPanel centerPanel;
+	
+	/** Represents the rules counter.
+	* @default 1
+	*/
+	
 	private int rulesCounter = 1;
+	
+	/** Represents an ArrayList of components.
+	*/
+	
 	private ArrayList<Component> ruleComponents = new ArrayList<Component>();
+	
+	/** Represents the name of a file path.
+	*/
+	
 	public String filePathToImport;
 
 	
@@ -53,31 +99,48 @@ public class FinalGUI {
 
 	}
 	
-	
+	/**
+	* This method creates the graphic interface.
+	* @return nothing.
+	*/
 	
 	public void buildGUI() {
+
+		/** Creates the frame and sets the size and the layout of it.
+		*@default EXIT_ON_CLOSE
+		*/
 		
-		// Creating the Frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 400);
 		frame.setLayout(new BorderLayout());
 		
+		/** Creates the MenuBar and adds components
+		*/
 		
-		
-		// Creating the MenuBar and adding components
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("RULES");
 		menuBar.add(menu);
 		final JMenuItem addButton = new JMenuItem("Add");		
 		menu.add(addButton);
 		
-		// Adding MenuBar to North of the frame
+		/** Adds the MenuBar to the north of the main frame.
+		*/
+		
 		frame.add(menuBar,BorderLayout.NORTH);
+		
+		/** Creates the center panel and sets the layout of it.
+		*/
 		
 		centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(4,1));
 		
-		// Creating panel and elements for first rule
+		/** Creates one more panel inside the center panel, 
+		* define it's layout 
+		* and also creates the elements for the first rule.
+		* @default won't include the variable operatorRuleBox
+		* variable firstTextFieldBox by @default 5
+		*/
+		
 		JPanel firstCenterPanel = new JPanel();
 		firstCenterPanel.setLayout(new FlowLayout());
 		JComboBox operatorRuleBox = new JComboBox(and_or); // not added to first center panel
@@ -89,25 +152,33 @@ public class FinalGUI {
 		firstCenterPanel.add(firstTextFieldBox);
 		centerPanel.add(firstCenterPanel);
 		
-		// Keeping track of rules components
+		/** Keep the track of rules components.
+		* Adds the following components to the ArrayList.
+		*/
+		
 		ruleComponents.add(operatorRuleBox);
 		ruleComponents.add(firstRuleBox);
 		ruleComponents.add(firstSignalBox);
 		ruleComponents.add(firstTextFieldBox);
 		
-		// Adding centerPanel to center of the frame
+		/** Adds the center panel to the center of the main frame.
+		*/
+		
 		frame.add(centerPanel, BorderLayout.CENTER);
 		
+		/** Creates the elements for the South Panel
+		*/
 		
-		
-		// Creating elements for South Panel
 		JButton importExcel = new JButton("Import Excel");
 		JButton showCodeSmells = new JButton("Show Code Smells");
 		JButton showExcel = new JButton("Show Excel");
 		JButton showQI = new JButton ("Show Quality Indicators");
 		final JComboBox badSmellChooser = new JComboBox(smells);
 		
-		// Creating South Panel
+		/** Creates the South Panel, sets the layout of it
+		* and adds the elements that were created previously.
+		*/
+		
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new FlowLayout());
 		southPanel.add(importExcel);
@@ -116,11 +187,20 @@ public class FinalGUI {
 		southPanel.add(showQI);
 		southPanel.add(badSmellChooser);
 		
-		// Adding southPanel to south of the frame
+		/** Adds the South Panel to the south part of the main frame.
+		*/
+		
 		frame.add(southPanel,BorderLayout.SOUTH);
 		
+		/** Listeners 
+		*/
 		
-		// **********Listeners***********
+		/** Adds a listener to the button importExcel.
+		* When clicking the button, the app will show the files the user has
+		* ordered by directories, and the user should select the one he pretends.
+		* !!not implemented!! @default should force the user to only choose an Excel File
+		*/
+		
 		importExcel.addActionListener(new ActionListener() {
 
 			@Override
@@ -136,6 +216,11 @@ public class FinalGUI {
 			}
 		});
 		
+		/** Adds a listener to the button showExcel.
+		* When clicking the button, the app will open and show the Excel file 
+		* that the user chose previously.
+		* !!not implemented!! @default should force the button to only open an Excel File
+		*/
 		
 		showExcel.addActionListener(new ActionListener() {
 
@@ -146,6 +231,9 @@ public class FinalGUI {
 			}
 		});
 		
+		/** Adds a listener to the button showCodeSmells.
+		* When clicking the button, the app will show a table of code smells.
+		*/
 		
 		showCodeSmells.addActionListener(new ActionListener() {
 
@@ -161,6 +249,10 @@ public class FinalGUI {
 			}
 		});
 		
+		/** Adds a listener to the button showQI.
+		* When clicking the button, the app will show the quality indicators.
+		*/
+		
 		showQI.addActionListener(new ActionListener() {
 			
 			@Override
@@ -171,6 +263,14 @@ public class FinalGUI {
 					setQualityIndicatorsViewForFeatureEnvy().init();
 			}
 		});
+		
+		/** Adds a listener to the button addButton.
+		* When clicking the button, the app will add a new rule 
+		* underneath the previous rule.
+		* @default one rule already it's created
+		* When 4 rules are created, the user can't add more rules.
+		* !!not implemented!! variable rulesCounterMAX by @default 4
+		*/
 		
 		addButton.addActionListener(new ActionListener() {
 			
@@ -183,19 +283,30 @@ public class FinalGUI {
 			}
 		});
 		
-		
-		
-		
-		// Final frame setup
+		/** Adjusts the main frame according to their components
+		* and sets the visibility of it.
+		*@default EXIT_ON_CLOSE
+		*/
+	
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 		
 	}
 	
-	// Adds a new rule when user clicks Menu Button Add Rule
+	/**
+	* This method adds a new rule, when the user clicks "Menu Button" -> "Add Rule".
+	* @return nothing.
+	*/
+	
 	private void addRule() {
 		
+		/**
+		 * Creates a sub center panel and define it's layout.
+		 * Also creates new components and adds them to the sub center panel.
+		 * The sub center panel will be added to the center panel
+		 * and due to that, the center panel will be updated.
+		 */
 
 		JPanel subCenterPanel = new JPanel();
 		subCenterPanel.setLayout(new FlowLayout());
@@ -210,14 +321,20 @@ public class FinalGUI {
 		centerPanel.add(subCenterPanel);
 		centerPanel.updateUI();
 		
-		// Keeping track of rules components 
+		/** Keep the track of rules components.
+		* Adds the following components to the ArrayList.
+		*/
 		
 		ruleComponents.add(operatorRuleBox);
 		ruleComponents.add(ruleBox);
 		ruleComponents.add(signalBox);
 		ruleComponents.add(textFieldBox);
 	}
-	
+
+	/**
+	* This method prints the rules.
+	* @return an ArrayList<Rule>
+	*/
 	
 	private ArrayList<Rule> scanRules() {
 		ArrayList<Rule> rules = new ArrayList<Rule>();
@@ -239,6 +356,11 @@ public class FinalGUI {
 		return rules;
 	}
 	
+	/**
+	* This method sets the detection results for the code smell "Long Method".
+	* @return a TableView.
+	*/
+	
 	private TableView setDetectionResultsViewForLongMethod() {
 		String[] columnNames = { "methodID", "Own Detector", "iPlasma", "PMD" };
 		ArrayList<Rule> rules = scanRules();
@@ -249,6 +371,11 @@ public class FinalGUI {
 		
 		return detectionResultsView;
 	}
+	
+	/**
+	* This method sets the detection results for the code smell "Feature Envy".
+	* @return a TableView.
+	*/
 	
 	private TableView setDetectionResultsViewForFeatureEnvy() {
 		String[] columnNames = { "methodID", "Own Detector"};
@@ -262,6 +389,11 @@ public class FinalGUI {
 		
 	}
 	
+	/**
+	* This method sets the quality indicator for the code smell "Long Method".
+	* @return a TableView.
+	*/
+	
 	private TableView setQualityIndicatorsViewForLongMethod() {
 		
 		String[] columnNames = {"Tool", "DCI", "DII", "ADCI", "ADII"};
@@ -273,6 +405,11 @@ public class FinalGUI {
 		
 		return qualityResultsView;
 	}
+	
+	/**
+	* This method sets the quality indicator for the code smell "Feature Envy".
+	* @return a TableView.
+	*/
 	
 	private TableView setQualityIndicatorsViewForFeatureEnvy() {
 
@@ -286,6 +423,11 @@ public class FinalGUI {
 		return qualityResultsView;
 	}	
 
+	/**
+	* This method sets the Excel File view.
+	* @return a TableView.
+	*/
+	
 	private TableView setExcelFileView() {
 		FileParser fileParser = new FileParser(filePathToImport);
 		String[][] data = fileParser.dataArray();

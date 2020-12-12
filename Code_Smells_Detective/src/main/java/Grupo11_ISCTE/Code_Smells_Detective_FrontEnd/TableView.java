@@ -9,11 +9,30 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellRenderer;
 
+/** Represents a Table View.
+* The Table View (...)
+* @author Marcelo Pereira
+* @version 1.0
+* @since 1.0
+*/
+
 public class TableView {
 
+	/** Represents the title of our main frame,
+	* an array of columns with names which type is String
+	* and a matrix with data which type is also String.
+	*/	
+		
 	String title;
 	String[] columnNames;
 	String[][] data;
+	
+	/** Class Constructor.
+	* Creates a Table View with the specified title, columns names and data.
+	* @param title The main frame title.
+	* @param columnNames The column names.
+	* @param data The represented data.
+	*/
 
 	public TableView(String title, String[] columnNames, String[][] data) {
 		this.title = title;
@@ -33,23 +52,40 @@ public class TableView {
 		SwingUtilities.invokeLater(runGUI);
 	}
 	
-	
+	/**
+	* This method creates the graphic interface.
+	*/
 
 	private void buildGUI() {
 
+		/** Creates the main frame giving it a name (title)
+		* and builds a table using the method buildTable. 
+		*/
+		
 		JFrame frame = new JFrame(title);
-
 		JTable table = buildTable();
 
-		// adding table to JScrollPane
+		/** Creates a variable scrollPane with the type JScrollPane 
+		* and adds the created table to it.
+		* Also sets the main frame with a specified size and visibility.
+		*/
+
 		JScrollPane scrollPane = new JScrollPane(table);
 		frame.add(scrollPane);
-		// Frame Size
 		frame.setSize(1000, 1000);
-		// Frame Visible = true
 		frame.setVisible(true);
 
 	}
+	
+	/**
+	* This method creates a table
+	* using @param data and @param columnNames.
+	* Also defines background colors for the different truth values 
+	* (they can be true or false).
+	* @default Color.white If the value it's neither true or false, the color will be white.
+	* @return a JTable.
+	*/
+
 
 	private JTable buildTable() {
 		JTable table;

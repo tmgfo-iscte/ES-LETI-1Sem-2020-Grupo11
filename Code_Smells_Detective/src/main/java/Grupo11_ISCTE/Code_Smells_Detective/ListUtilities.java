@@ -5,6 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/** Represents the list of utilities.
+* This list (...).
+* @author Marcelo Pereira
+* @version 1.0
+* @since 1.0
+*/
+
 public class ListUtilities {
 
 	public static <T> List<T> union(List<T> list1, List<T> list2) {
